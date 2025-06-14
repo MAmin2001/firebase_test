@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/features/add_category/screens/update_category.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -73,6 +74,18 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, i) {
           return Card(
             child: InkWell(
+              onDoubleTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => UpdateCategory(
+                          docId: usersData[i].id,
+                          oldName: usersData[i]['name'],
+                        ),
+                  ),
+                );
+              },
               onLongPress: () {
                 deleteUserData(index: i);
               },
