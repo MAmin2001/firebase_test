@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,6 +12,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // bool isLoading = true;
+
+  List<QueryDocumentSnapshot> usersData = [];
+
+  getCategoriesData() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('users').get();
+    usersData.addAll(querySnapshot.docs);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getCategoriesData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +54,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      // body:
-      //     isLoading == true
-      //         ? Center(child: CircularProgressIndicator())
-      //         : GridView.builder(
-      //           itemCount: 3,
-      //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //             crossAxisCount: 2,
-      //             mainAxisExtent: 160,
-      //           ),
-      //           itemBuilder: (context, i) {
-      //             return Card(
-      //               child: Container(
-      //                 padding: EdgeInsets.all(10),
-      //                 child: Column(
-      //                   children: [Icon(Icons.edit_document), Text("name")],
-      //                 ),
-      //               ),
-      //             );
-      //           },
-      //         ),
+      body: GridView.builder(
+        itemCount: usersData.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 160,
+        ),
+        itemBuilder: (context, i) {
+          return Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Icon(Icons.edit_document),
+                  Spacer(),
+                  Text(usersData[i]['name']),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
