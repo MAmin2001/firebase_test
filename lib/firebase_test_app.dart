@@ -1,3 +1,4 @@
+import 'package:firebase_test/features/add_category/screens/add_category.dart';
 import 'package:firebase_test/features/auth/ui/screens/login_screen.dart';
 import 'package:firebase_test/features/auth/ui/screens/signup_screen.dart';
 import 'package:firebase_test/features/home/ui/screens/home_screen.dart';
@@ -31,7 +32,6 @@ class _FirebaseTestAppState extends State<FirebaseTestApp> {
       title: 'Firebase Test',
       theme: ThemeData(
         primaryColor: Colors.blue,
-
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
           actionsIconTheme: IconThemeData(size: 30, color: Colors.white),
@@ -40,14 +40,15 @@ class _FirebaseTestAppState extends State<FirebaseTestApp> {
         ),
       ),
 
-      home:
-          FirebaseAuth.instance.currentUser == null
-              ? LoginScreen()
-              : HomeScreen(),
+      home: AddCategory(),
+      // FirebaseAuth.instance.currentUser == null
+      //     ? LoginScreen()
+      //     : HomeScreen(),
       routes: {
         "signup": (context) => SignupScreen(),
         "login": (context) => LoginScreen(),
         "home": (context) => HomeScreen(),
+        "addcategory": (context) => AddCategory(),
       },
     );
   }

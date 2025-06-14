@@ -21,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
       // print('Google sign in aborted');
       return;
     }
-
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
@@ -109,7 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
             Container(height: 20),
-
             MaterialButton(
               height: 40,
               shape: RoundedRectangleBorder(
