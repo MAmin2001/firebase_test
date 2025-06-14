@@ -15,16 +15,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<QueryDocumentSnapshot> usersData = [];
 
-  getCategoriesData() async {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('users').get();
     usersData.addAll(querySnapshot.docs);
     setState(() {});
   }
 
+  deleteUserData({required int index}) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(usersData[index].id)
+        .delete();
+    usersData.clear(); // Clear the old list
+    await getUsersData();
+    setState(() {});
+  }
+
   @override
   void initState() {
-    getCategoriesData();
     super.initState();
   }
 
@@ -62,14 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         itemBuilder: (context, i) {
           return Card(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Icon(Icons.edit_document),
-                  Spacer(),
-                  Text(usersData[i]['name']),
-                ],
               ),
             ),
           );

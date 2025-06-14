@@ -40,7 +40,6 @@ class _FirebaseTestAppState extends State<FirebaseTestApp> {
         ),
       ),
 
-      home: AddCategory(),
       // FirebaseAuth.instance.currentUser == null
       //     ? LoginScreen()
       //     : HomeScreen(),
