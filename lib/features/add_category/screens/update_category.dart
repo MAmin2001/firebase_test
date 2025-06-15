@@ -30,7 +30,7 @@ class _UpdateCategoryState extends State<UpdateCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Category")),
+      appBar: AppBar(title: Text("Update Category")),
       body: Form(
         key: formState,
         child: Column(

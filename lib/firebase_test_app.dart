@@ -1,5 +1,4 @@
 import 'package:firebase_test/features/add_category/screens/add_category.dart';
-import 'package:firebase_test/features/add_category/screens/update_category.dart';
 import 'package:firebase_test/features/auth/ui/screens/login_screen.dart';
 import 'package:firebase_test/features/auth/ui/screens/signup_screen.dart';
 import 'package:firebase_test/features/home/ui/screens/home_screen.dart';

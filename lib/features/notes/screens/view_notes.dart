@@ -1,36 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_test/features/add_category/screens/update_category.dart';
-import 'package:firebase_test/features/notes/screens/view_notes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ViewNotes extends StatefulWidget {
+  const ViewNotes({super.key, required this.userId});
+  final String userId;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ViewNotes> createState() => _ViewNotesState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ViewNotesState extends State<ViewNotes> {
   // bool isLoading = true;
 
-  List<QueryDocumentSnapshot> usersData = [];
+  List<QueryDocumentSnapshot> notes = [];
 
   getUsersData() async {
     QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('users').get();
-    usersData.addAll(querySnapshot.docs);
-    setState(() {});
-  }
-
-  deleteUserData({required int index}) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(usersData[index].id)
-        .delete();
-    usersData.clear(); // Clear the old list
-    await getUsersData();
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(widget.userId)
+            .collection('notes')
+            .get();
+    notes.addAll(querySnapshot.docs);
     setState(() {});
   }
 
@@ -51,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text('Homepage'),
+        title: const Text('Notes'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -67,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: GridView.builder(
-        itemCount: usersData.length,
+        itemCount: notes.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisExtent: 160,
@@ -75,36 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, i) {
           return Card(
             child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ViewNotes(userId: usersData[i].id),
-                  ),
-                );
-              },
-              onDoubleTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => UpdateCategory(
-                          docId: usersData[i].id,
-                          oldName: usersData[i]['name'],
-                        ),
-                  ),
-                );
-              },
-              onLongPress: () {
-                deleteUserData(index: i);
-              },
+              onDoubleTap: () {},
+              onLongPress: () {},
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Column(
                   children: [
                     Icon(Icons.edit_document),
                     Spacer(),
-                    Text(usersData[i]['name']),
+                    Text(notes[i]['notes']),
                   ],
                 ),
               ),
