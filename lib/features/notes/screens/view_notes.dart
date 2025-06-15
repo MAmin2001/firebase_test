@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_test/features/add_category/screens/update_category.dart';
+import 'package:firebase_test/features/notes/screens/add_notes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -40,7 +40,11 @@ class _ViewNotesState extends State<ViewNotes> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () {
-          Navigator.of(context).pushNamed("addcategory");
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => AddNotes(userId: widget.userId),
+            ),
+          );
         },
         child: Icon(Icons.add),
       ),
